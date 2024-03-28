@@ -1,0 +1,24 @@
+<h2>User Management</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date of birth</th>
+      <th>Education</th>
+      <th>Role</th>
+      <th>Position</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let user of users">
+      <tr>
+        <td>{{ user.name }} {{ user.lastName }}</td>
+        <td>{{ user.dateOfBirth }}</td>
+        <td>{{ user.education }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.position }}</td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

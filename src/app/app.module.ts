@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { UserInterceptor } from './services/user.interceptor';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AssessmentReportComponent } from './assessment-report/assessment-report.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AssessmentReportComponent } from './assessment-report/assessment-report
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    AssessmentReportComponent
+    AssessmentReportComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

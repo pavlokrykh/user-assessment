@@ -49,4 +49,9 @@ export class UserService {
     return this.httpClient.get<any>(url, {params});
   }
 
+  getUsers(): Observable<any[]> {
+    const url = `${this.apiUrl}/api/users`;
+    return this.httpClient.get<any[]>(url);
+  }
+
 }
