@@ -10,13 +10,12 @@ export class UserInterceptor implements HttpInterceptor {
   constructor(private userService: UserService, private router: Router) {}
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const token = this.userService.getToken() || localStorage.getItem('userToken');
+    const token = this.userService.getToken() || sessionStorage.getItem('userToken');
 
     if (token) {
       const authRequest = req.clone({
         headers: req.headers.set('X-Token', token)
       });
-      console.log(authRequest);
       return next.handle(authRequest);
     } 
     else if (!token) {

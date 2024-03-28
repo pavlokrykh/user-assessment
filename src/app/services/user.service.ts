@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({
@@ -21,10 +21,10 @@ export class UserService {
         next: res => {
           this.token = res.token;
           this.role = res.role;
-          localStorage.setItem('userToken', res.token);
+          sessionStorage.setItem('userToken', res.token);
         },
         error: () => {
-          localStorage.removeItem('userToken');
+          sessionStorage.removeItem('userToken');
         }
     })
     );
@@ -41,6 +41,12 @@ export class UserService {
   getUserAssessments(): Observable<any[]> {
     const url = `${this.apiUrl}/api/userassessments`;
     return this.httpClient.get<any[]>(url);
+  }
+
+  getAssessmentGraphData(id: number): Observable<any> {
+    const url = `${this.apiUrl}/api/userassessments/graph`;
+    let params = new HttpParams().set('id', id);
+    return this.httpClient.get<any>(url, {params});
   }
 
 }

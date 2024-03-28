@@ -11,13 +11,15 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { UserInterceptor } from './services/user.interceptor';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AssessmentReportComponent } from './assessment-report/assessment-report.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    AssessmentReportComponent
   ],
   imports: [
     BrowserModule,

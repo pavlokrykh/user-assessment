@@ -1,4 +1,4 @@
-<h2>Assessment Reports</h2>
+<h2>Dashboard</h2>
 
 <div *ngIf="isAdmin">
   <a routerLink="/admin">Admin Section</a>
@@ -10,5 +10,8 @@
     <p>Users Resolved: {{ report.users_resolved }}</p>
     <p>Active: {{ report.active }}</p>
     <img [src]="report.image_url" alt="{{ report.name }}">
+    <button (click)="openAssessmentReport(report.id)">View Report</button>
   </li>
 </ul>
+
+<router-outlet></router-outlet>

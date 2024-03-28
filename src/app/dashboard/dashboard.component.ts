@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { UserInterceptor } from '../services/user.interceptor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,7 @@ export class DashboardComponent implements OnInit {
   assessmentReports: any[] = [];
   isAdmin: boolean = false;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.isAdmin = this.userService.getRole() === 'Admin';
@@ -27,6 +28,10 @@ export class DashboardComponent implements OnInit {
         console.error('Failed to fetch assessment reports: ', error);
       }
     })
+  }
+
+  openAssessmentReport(id: string) {
+    this.router.navigate(['/assessment', id]);
   }
 
 }
