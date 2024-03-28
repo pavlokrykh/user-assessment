@@ -9,13 +9,15 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-import { AuthInterceptor } from './auth/auth.interceptor';
+import { UserInterceptor } from './services/user.interceptor';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: UserInterceptor,
       multi: true
     }
   ],

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,19 +13,22 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   onSubmit() {
-    this.authService.login(this.email, this.password).subscribe({
-      next: (res) => {
-        console.log('Login successful: ', res);
-      },
-      error: (err) => {
-        console.log('Login failed: ', err);
-      }
+    this.userService.login(this.email, this.password).subscribe({
+      next: (res) => this.handleLoginResponse(res),
+      error: (err) => this.handleLoginError(err)
     });
   }
 
+  handleLoginResponse(res: any) {
+    console.log('Login successful: ', res);
+    this.router.navigate(['/dashboard']);
+  }
 
+  handleLoginError(err: any) {
+    console.error('Login failed:', err);
+  }
 
 }
