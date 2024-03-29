@@ -9,25 +9,29 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
   users: any[] = [];
+  isLoading: boolean = true;
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
-    // To Do: check if admin or redirect
+    if (atob(this.userService.getToken()!) !== 'AdminUser') {
+      this.router.navigate(['/dashboard']);
+    }
 
     this.fetchUsers();
   }
 
   fetchUsers() {
-    this.userService.getUsers().subscribe(
-      users => {
+    this.userService.getUsers().subscribe({
+      next: (users) => {
         this.users = users;
-        console.log(users);
+        this.isLoading = false;
       },
-      error => {
+      error: (error) => {
         console.error('Failed to fetch users: ', error);
+        this.isLoading = false;
       }
-    )
+  })
   }
 
 }

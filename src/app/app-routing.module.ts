@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent},
   { path: 'assessment/:id', component: AssessmentReportComponent},
   { path: 'admin', component: AdminComponent},
-  { path: '**', redirectTo: '/login'}
+  { path: '**', redirectTo: '/dashboard'}
 ];
 
 @NgModule({

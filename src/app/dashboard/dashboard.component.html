@@ -1,17 +1,27 @@
-<h2>Dashboard</h2>
+<app-nav></app-nav>
 
-<div *ngIf="isAdmin">
-  <a routerLink="/admin">Admin Section</a>
+<div class="container">
+  <h2>Assessment Reports</h2>
+  <div *ngIf="isLoading" class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <ul *ngIf="!isLoading">
+    <li *ngFor="let report of assessmentReports">
+      <mat-card>
+        <mat-card-header color="">
+          <mat-card-title>{{ report.name }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="report.image_url" [alt]="report.name">
+        <mat-card-content>
+          <p>Users Resolved: {{ report.users_resolved }}</p>
+          <p>Active: {{ report.active }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="openAssessmentReport(report.id)">View Report</button>
+        </mat-card-actions>
+      </mat-card>
+    </li>
+  </ul>
+
+  <router-outlet></router-outlet>
 </div>
-
-<ul>
-  <li *ngFor="let report of assessmentReports">
-    <h3>{{ report.name }}</h3>
-    <p>Users Resolved: {{ report.users_resolved }}</p>
-    <p>Active: {{ report.active }}</p>
-    <img [src]="report.image_url" alt="{{ report.name }}">
-    <button (click)="openAssessmentReport(report.id)">View Report</button>
-  </li>
-</ul>
-
-<router-outlet></router-outlet>

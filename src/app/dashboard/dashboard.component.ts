@@ -10,12 +10,11 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
   assessmentReports: any[] = [];
-  isAdmin: boolean = false;
+  isLoading: boolean = true;
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit() {
-    this.isAdmin = this.userService.getRole() === 'Admin';
     this.fetchAssessmentReports();
   }
 
@@ -23,9 +22,11 @@ export class DashboardComponent implements OnInit {
     this.userService.getUserAssessments().subscribe({
       next: (reports) => {
         this.assessmentReports = reports;
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Failed to fetch assessment reports: ', error);
+        this.isLoading = false;
       }
     })
   }

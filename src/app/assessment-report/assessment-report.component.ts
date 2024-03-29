@@ -20,6 +20,8 @@ export class AssessmentReportComponent implements OnInit {
     type: this.graphType as ChartType,
     data: this.graphData
   };
+  isLoading: boolean = true;
+  isEmpty: boolean = false;
 
   constructor(private userService: UserService, private route: ActivatedRoute) {}
 
@@ -29,33 +31,50 @@ export class AssessmentReportComponent implements OnInit {
   }
 
   fetchGraphData() {
+    this.isLoading = true;
+
     this.userService.getAssessmentGraphData(this.id!)
       .subscribe(response => {
-        
-        this.graphData = response.data;
-        this.graphType = response.type;
 
-        const labels = Object.keys(this.graphData);
-        const values = Object.values(this.graphData) as number[];
+        if (response && response.data) {
+          this.graphData = response.data;
+          this.graphType = response.type;
 
-        this.chartConfig = {
-          type: this.graphType as ChartType,
-          data: {
-            labels: labels,
-            datasets: [
-              {
-                label: 'Assessment Scores',
-                data: values,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)'
-              }
-            ]
+          const labels = Object.keys(this.graphData);
+          const values = Object.values(this.graphData) as number[];
+
+          this.chartConfig = {
+            type: this.graphType as ChartType,
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'Assessment Scores',
+                  data: values,
+                  backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                  borderColor: 'rgba(255, 99, 132, 1)'
+                }
+              ]
+            },
+            options: {
+              responsive: true
+            }
           }
-        }
-        const ctx = this.assessmentChart?.nativeElement as HTMLCanvasElement;
-        new Chart(ctx, this.chartConfig);
 
+          this.createChart();
+        } else {
+          this.isEmpty = true;
+        }
+
+        this.isLoading = false;
       })
+  }
+
+  createChart() {
+    if (this.assessmentChart) {
+      const ctx = this.assessmentChart?.nativeElement as HTMLCanvasElement;
+      new Chart(ctx, this.chartConfig);
+    }
   }
 
 }

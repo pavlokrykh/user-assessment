@@ -8,7 +8,6 @@ import { Observable, tap } from 'rxjs';
 export class UserService {
   private apiUrl = 'https://user-assessment-api.vercel.app';
   private token: string | null = null;
-  private role: string | null = null;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -20,7 +19,6 @@ export class UserService {
       tap({
         next: res => {
           this.token = res.token;
-          this.role = res.role;
           sessionStorage.setItem('userToken', res.token);
         },
         error: () => {
@@ -30,12 +28,17 @@ export class UserService {
     );
   }
 
-  getToken() {
-    return this.token;
+  logout() {
+    sessionStorage.removeItem('userToken');
+    this.token = null;
   }
 
-  getRole() {
-    return this.role;
+  getToken() {
+    if (this.token) {
+      return this.token;
+    } else {
+      return sessionStorage.getItem('userToken');
+    }
   }
 
   getUserAssessments(): Observable<any[]> {

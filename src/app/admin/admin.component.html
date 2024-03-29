@@ -1,24 +1,32 @@
-<h2>User Management</h2>
+<app-nav></app-nav>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Date of birth</th>
-      <th>Education</th>
-      <th>Role</th>
-      <th>Position</th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngFor="let user of users">
+
+<div class="container">
+  <h2>User Management</h2>
+  <div *ngIf="isLoading" class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+  
+  <table *ngIf="!isLoading">
+    <thead>
       <tr>
-        <td>{{ user.name }} {{ user.lastName }}</td>
-        <td>{{ user.dateOfBirth }}</td>
-        <td>{{ user.education }}</td>
-        <td>{{ user.role }}</td>
-        <td>{{ user.position }}</td>
+        <th>Name</th>
+        <th>Date of birth</th>
+        <th>Education</th>
+        <th>Role</th>
+        <th>Position</th>
       </tr>
-    </ng-container>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let user of users">
+        <tr>
+          <td>{{ user.name }} {{ user.lastName }}</td>
+          <td>{{ user.dateOfBirth }}</td>
+          <td>{{ user.education }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.position }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -10,16 +11,28 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
+  loginForm!: FormGroup;
+  loginError: string = '';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService, 
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    })
+  }
 
   onSubmit() {
-    this.userService.login(this.email, this.password).subscribe({
-      next: (res) => this.handleLoginResponse(res),
-      error: (err) => this.handleLoginError(err)
-    });
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.userService.login(email, password).subscribe({
+        next: (res) => this.handleLoginResponse(res),
+        error: (err) => this.handleLoginError(err)
+      })
+    }
   }
 
   handleLoginResponse(res: any) {
@@ -28,6 +41,7 @@ export class LoginComponent {
   }
 
   handleLoginError(err: any) {
+    this.loginError = 'Invalid email or password';
     console.error('Login failed:', err);
   }
 

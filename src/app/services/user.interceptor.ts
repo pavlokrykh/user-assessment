@@ -19,7 +19,6 @@ export class UserInterceptor implements HttpInterceptor {
       return next.handle(authRequest);
     } 
     else if (!token) {
-      // Redirect back to login page if there is no token
       this.router.navigate(['/login']);
     }
 
