@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
   assessmentReports: any[] = [];
   isLoading: boolean = true;
+  loadingError: boolean = false;
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -27,6 +28,7 @@ export class DashboardComponent implements OnInit {
       error: (error) => {
         console.error('Failed to fetch assessment reports: ', error);
         this.isLoading = false;
+        this.loadingError = true;
       }
     })
   }
